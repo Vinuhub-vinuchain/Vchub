@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VinuChain Ecosystem</title>
+    <link rel="icon" href="https://photos.pinksale.finance/file/pinksale-logo-upload/1759847695513-f915ce15471ce09f03d8fbf68bc0616f.png" type="image/png">
+    <style>
+        :root {
+            --bg: #000;
+            --fg: #fff;
+            --card: #111;
+            --border: #222;
+            --accent: #ccc;
+            --shadow: 0 8px 30px rgba(255,255,255,0.06);
+            --radius: 20px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--fg);
+            line-height: 1.7;
+        }
+        header {
+            padding: 1.5rem 1.2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-start;
+        }
+        .logo {
+            height: 46px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .logo:hover { transform: scale(1.06); }
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        nav {
+            background: var(--border);
+            padding: 1.2rem;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-radius: var(--radius);
+            margin: 0 1rem 2rem;
+        }
+        .tab-btn {
+            background: none;
+            border: 1.5px solid var(--accent);
+            color: var(--fg);
+            padding: 0.85rem 1.6rem;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 50px;
+            font-size: 0.98rem;
+            min-width: 110px;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--fg);
+            color: var(--bg);
+            box-shadow: var(--shadow);
+        }
+        .container { max-width: 1300px; margin: 0 auto; padding: 1rem; }
+        .search {
+            width: 100%; max-width: 500px; margin: 2rem auto; display: block;
+            padding: 1.1rem; border: 1.5px solid var(--border); background: var(--bg);
+            color: var(--fg); font-size: 1.05rem; border-radius: 50px; text-align: center;
+            transition: border-color 0.3s ease;
+        }
+        .search:focus { outline: none; border-color: var(--accent); }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.8rem;
+            margin-top: 1.5rem;
+        }
+        .project-card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2.2rem;
+            text-align: center;
+            position: relative;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: smoothFadeIn 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+            border-color: var(--accent);
+            transition: all 0.3s ease;
+        }
+        @keyframes smoothFadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .project-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+        }
+        .live-badge {
+            position: absolute; top: 1rem; left: 1rem;
+            background: #00bfff; color: #000; padding: 0.4rem 0.9rem;
+            font-weight: 600; border-radius: 20px; font-size: 0.75rem;
+        }
+        .icon {
+            width: 48px; height: 48px; margin: 0 auto 1rem;
+            fill: var(--fg); opacity: 0.85;
+        }
+        .project-name {
+            font-size: 1.45rem; font-weight: 700; margin-bottom: 0.6rem;
+        }
+        .project-desc {
+            opacity: 0.8; font-size: 0.98rem; margin-bottom: 1.2rem;
+        }
+        .project-links {
+            display: flex; gap: 0.9rem; justify-content: center; flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.7rem 1.4rem; border: 1.5px solid var(--accent);
+            background: none; color: var(--fg); text-decoration: none;
+            border-radius: 30px; font-weight: 600; font-size: 0.92rem;
+            transition: all 0.3s ease;
+        }
+        .btn:hover { background: var(--fg); color: var(--bg); }
+        .coming-soon {
+            grid-column: 1 / -1; padding: 4rem 2rem; text-align: center;
+        }
+        .coming-soon h3 { font-size: 1.9rem; margin-bottom: 1rem; opacity: 0.9; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        footer {
+            background: var(--border); text-align: center; padding: 2.5rem;
+            margin-top: 5rem; font-size: 0.92rem; opacity: 0.75;
+        }
+        @media (max-width: 768px) {
+            .hero { padding: 3rem 1rem; }
+            .hero h1 { font-size: 2.7rem; }
+            .tab-btn { padding: 0.7rem 1.2rem; font-size: 0.9rem; }
+            .project-card { padding: 1.9rem; }
+            .icon { width: 40px; height: 40px; }
+        }
+        @media (max-width: 480px) {
+            .projects-grid { grid-template-columns: 1fr; }
+            nav { flex-direction: column; align-items: center; }
+            .tab-btn { width: 85%; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <a href="https://vinuhub.xyz" target="_blank">
+            <img src="https://photos.pinksale.finance/file/pinksale-logo-upload/1759847695513-f915ce15471ce09f03d8fbf68bc0616f.png" 
+                 alt="VinuHub" class="logo">
+        </a>
+    </header>
+
+    <div class="hero">
+        <h1>VinuChain Ecosystem</h1>
+        <p>Zero-fee EVM L1. Powered by VinuHub.</p>
+    </div>
+
+    <nav>
+        <button class="tab-btn" data-tab="audited">Audited</button>
+        <button class="tab-btn active" data-tab="upcoming">Upcoming</button>
+        <button class="tab-btn" data-tab="launched">Launched</button>
+        <button class="tab-btn" data-tab="live">Live Utilities</button>
+    </nav>
+
+    <div class="container">
+        <input type="text" class="search" placeholder="Search projects & tools..." id="search">
+
+        <!-- Audited -->
+        <div id="audited" class="tab-content">
+            <div class="projects-grid">
+                <div class="project-card coming-soon">
+                    <h3>Coming Soon</h3>
+                    <p>First audited projects launching Q1 2026.</p>
+                    <a href="https://t.me/lnF0xbtc" class="btn">Request Audit</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming -->
+        <div id="upcoming" class="tab-content active">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 4.48 10.04 10 10.04S22 22.55 22 17V7l-10-5z"/></svg>
+                    <h3 class="project-name">VinuHub</h3>
+                    <p class="project-desc">All-in-one: Token Creator, Locker, Staking, Launchpad, DEX, VNS. Presale soon.</p>
+                    <div class="project-links">
+                        <a href="https://vinuhub.xyz" class="btn">Website</a>
+                        <a href="https://t.me/Vinuhub" class="btn">Telegram</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <h3 class="project-name">VInuRepublic</h3>
+                    <p class="project-desc">Details coming soon.</p>
+                    <a href="#" class="btn">Waitlist</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Launched -->
+        <div id="launched" class="tab-content">
+            <div class="projects-grid">
+                <div class="project-card">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <h3 class="project-name">Vita Inu ($VINU)</h3>
+                    <p class="project-desc">OG meme token. Live on VinuSwap.</p>
+                    <div class="project-links">
+                        <a href="https://www.vitainu.org/" class="btn">Website</a>
+                        <a href="https://t.me/VitaInu" class="btn">Telegram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Utilities — ALL 9 RESTORED -->
+        <div id="live" class="tab-content">
+            <div class="projects-grid">
+
+                <!-- 1. VinuSwap -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+                    <h3 class="project-name">VinuSwap</h3>
+                    <p class="project-desc">Zero-fee DEX for all VinuChain tokens.</p>
+                    <a href="https://vinuchain.vinuswap.org/" class="btn">Trade</a>
+                </div>
+
+                <!-- 2. CoinFlip -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5h-1.5v1.5c-1.11.31-2.05 1.09-2.05 2.35 0 1.3.97 2.02 2.56 2.44 1.81.47 2.42 1.08 2.42 1.82 0 .72-.68 1.4-2.11 1.4-1.53 0-2.15-.79-2.2-1.79h-1.71c.06 1.47 1.03 2.63 2.67 3v1.5h1.5v-1.5c1.14-.3 2.06-1.09 2.06-2.36 0-1.49-1.13-2.16-2.56-2.46z"/></svg>
+                    <h3 class="project-name">CoinFlip</h3>
+                    <p class="project-desc">Fair 50/50 on-chain game.</p>
+                    <a href="https://coinflip.vinuhub.xyz" class="btn">Play</a>
+                </div>
+
+                <!-- 3. Token Locker -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5s-5 2.24-5 5v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    <h3 class="project-name">Token Locker</h3>
+                    <p class="project-desc">Lock LP and tokens for trust.</p>
+                    <a href="https://locker.vinuhub.xyz" class="btn">Lock</a>
+                </div>
+
+                <!-- 4. Multi-Token Sender -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    <h3 class="project-name">Multi-Token Sender</h3>
+                    <p class="project-desc">Airdrop to thousands in one tx.</p>
+                    <a href="https://multitokenender.vinuhub.xyz" class="btn">Send</a>
+                </div>
+
+                <!-- 5. Portfolio Tracker -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                    <h3 class="project-name">Portfolio Tracker</h3>
+                    <p class="project-desc">Track all your assets in one place.</p>
+                    <a href="https://portfoliotracker.vinuhub.xyz" class="btn">Track</a>
+                </div>
+
+                <!-- 6. Stake $VIN -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    <h3 class="project-name">Stake $VIN</h3>
+                    <p class="project-desc">Stake native $VIN for rewards.</p>
+                    <a href="https://stakevin.vinuhub.xyz" class="btn">Stake</a>
+                </div>
+
+                <!-- 7. Staking Pools -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                    <h3 class="project-name">Staking Pools</h3>
+                    <p class="project-desc">Farm LP and earn $VINU.</p>
+                    <a href="https://stakingpools.vinuhub.xyz" class="btn">Farm</a>
+                </div>
+
+                <!-- 8. Token Creator -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                    <h3 class="project-name">Token Creator</h3>
+                    <p class="project-desc">Create ERC-20 in 60 seconds.</p>
+                    <a href="https://tokencreator.vinuhub.xyz" class="btn">Create</a>
+                </div>
+
+                <!-- 9. VNS Naming -->
+                <div class="project-card">
+                    <div class="live-badge">LIVE</div>
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M17.63 5.84C17.27 5.33 16.67 5 16 5l-1.32.05c-1.4.06-2.57.5-3.55 1.15-1.68 1.15-2.73 3.23-3.05 5.61L6.5 15.95c-.15.35-.22.72-.22 1.1V17c0 .55.45 1 1 1h1.05c.38 0 .75-.07 1.1-.22l2.65-1.23c2.38-1.32 3.98-3.7 4.41-6.52l.05-1.32c0-.67-.33-1.27-.84-1.63l-2.65-1.52zM9 14.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm5 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+                    <h3 class="project-name">VNS Naming</h3>
+                    <p class="project-desc">Register yourname.vc</p>
+                    <a href="https://vns.vinuhub.xyz" class="btn">Register</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 <a href="https://vinuhub.xyz" style="color: var(--accent);">VinuHub</a> — All tools live on VinuChain.<br>
+        <a href="https://t.me/Vinuhub" style="color: var(--accent);">Join Community</a> • 
+        <a href="https://t.me/lnF0xbtc" style="color: var(--accent);">Request Audit</a></p>
+    </footer>
+
+    <script>
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(btn.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Search
+        document.getElementById('search').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.style.display = card.textContent.toLowerCase().includes(term) ? 'block' : 'none';
+            });
+        });
+
+        // Stagger animation delays
+        document.querySelectorAll('.project-card').forEach((card, i) => {
+            card.style.animationDelay = `${i * 0.1}s`;
+        });
+    </script>
+</body>
+</html>
