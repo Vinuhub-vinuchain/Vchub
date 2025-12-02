@@ -1,3 +1,5 @@
+'use client';
+
 import { TabKey } from '@/types';
 
 interface Props {
@@ -9,18 +11,18 @@ export default function NavTabs({ activeTab, setActiveTab }: Props) {
   const tabs: TabKey[] = ['audited', 'upcoming', 'launched', 'live'];
 
   return (
-    <nav className="bg-border p-5 flex justify-center flex-wrap gap-4 rounded-xl mx-4 mb-8">
+    <nav className="bg-[var(--border)] p-5 flex justify-center flex-wrap gap-4 rounded-xl mx-4 mb-8">
       {tabs.map((tab) => (
         <button
           key={tab}
-          className={`px-6 py-3 border-2 border-accent text-fg rounded-full font-semibold transition-all ${
+          className={`px-6 py-3 border-2 border-[var(--accent)] text-[var(--fg)] rounded-full font-semibold transition-all ${
             activeTab === tab
-              ? 'bg-fg text-bg shadow-lg'
-              : 'hover:border-accent hover:shadow-md'
+              ? 'bg-[var(--fg)] text-[var(--bg)] shadow-lg'
+              : 'hover:border-[var(--accent)] hover:shadow-md'
           }`}
           onClick={() => setActiveTab(tab)}
         >
-          {tab.charAt(0).toUpperCase() + tab.slice(1).replace(/([A-Z])/g, ' $1')}
+          {tab.charAt(0).toUpperCase() + tab.slice(1)}
         </button>
       ))}
     </nav>
