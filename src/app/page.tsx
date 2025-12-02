@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
@@ -13,18 +15,20 @@ export default function Home() {
   const projects: Record<TabKey, Project[]> = {
     audited: [
       {
-        id: 1,
+        id: 'audited1',
         name: 'Coming Soon',
         desc: 'First audited projects launching Q1 2026.',
+        icon: 'lock', // Use string for icon name, render in card
         isLive: false,
         links: [{ label: 'Request Audit', url: 'https://t.me/lnF0xbtc' }],
       },
     ],
     upcoming: [
       {
-        id: 2,
+        id: 'upcoming1',
         name: 'VinuHub',
         desc: 'All-in-one: Token Creator, Locker, Staking, Launchpad, DEX, VNS. Presale soon.',
+        icon: 'hub',
         isLive: false,
         links: [
           { label: 'Website', url: 'https://vinuhub.xyz' },
@@ -32,23 +36,28 @@ export default function Home() {
         ],
       },
       {
-        id: 3,
+        id: 'upcoming2',
         name: 'VinuRepublic ($VIR)',
         desc: 'Community-driven utility token on VinuChain. Delegate to #VinuRepublic Node for $VINU/$VC burns + good APR. 21M supply | Renounced | No tax. Presale live!',
+        icon: 'republic',
         isLive: false,
         links: [
           { label: 'Website', url: 'http://bio.link/vinurepublic' },
           { label: 'Telegram', url: 'https://t.me/VinuRepublic' },
           { label: 'X', url: 'https://x.com/VinuRepublic' },
-          { label: 'CA', url: '#' }, // Handle in onclick for copy
+          { label: 'CA', url: '#', onclick: () => {
+            navigator.clipboard.writeText('0x71B4E99547Ad8b307C1313284b4bAc64988C53BB');
+            alert('CA copied to clipboard');
+          } },
         ],
       },
     ],
     launched: [
       {
-        id: 4,
+        id: 'launched1',
         name: 'Vinu Inu ($VINU)',
         desc: 'OG meme token. Live on VinuSwap.',
+        icon: 'dog',
         isLive: true,
         links: [
           { label: 'Website', url: 'https://www.vitainu.org/' },
@@ -57,22 +66,84 @@ export default function Home() {
       },
     ],
     live: [
-      { id: 5, name: 'VinuSwap', desc: 'Zero-fee DEX for all VinuChain tokens.', isLive: true, links: [{ label: 'Trade', url: 'https://vinuchain.vinuswap.org/' }] },
-      { id: 6, name: 'CoinFlip', desc: 'Fair 50/50 on-chain game.', isLive: true, links: [{ label: 'Play', url: 'https://coinflip.vinuhub.xyz' }] },
-      { id: 7, name: 'Token Locker', desc: 'Lock LP and tokens for trust.', isLive: true, links: [{ label: 'Lock', url: 'https://locker.vinuhub.xyz' }] },
-      { id: 8, name: 'Multi-Token Sender', desc: 'Airdrop to thousands in one tx.', isLive: true, links: [{ label: 'Send', url: 'https://multitokenender.vinuhub.xyz' }] },
-      { id: 9, name: 'Portfolio Tracker', desc: 'Track all your assets in one place.', isLive: true, links: [{ label: 'Track', url: 'https://portfoliotracker.vinuhub.xyz' }] },
-      { id: 10, name: 'Stake $VIN', desc: 'Stake native $VIN for rewards.', isLive: true, links: [{ label: 'Stake', url: 'https://stakevin.vinuhub.xyz' }] },
-      { id: 11, name: 'Staking Pools', desc: 'Farm LP and earn $VINU.', isLive: true, links: [{ label: 'Farm', url: 'https://stakingpools.vinuhub.xyz' }] },
-      { id: 12, name: 'Token Creator', desc: 'Create ERC-20 in 60 seconds.', isLive: true, links: [{ label: 'Create', url: 'https://tokencreator.vinuhub.xyz' }] },
-      { id: 13, name: 'VNS Naming', desc: 'Register yourname.vc', isLive: true, links: [{ label: 'Register', url: 'https://vns.vinuhub.xyz' }] },
+      {
+        id: 'live1',
+        name: 'VinuSwap',
+        desc: 'Zero-fee DEX for all VinuChain tokens.',
+        icon: 'arrows-exchange',
+        isLive: true,
+        links: [{ label: 'Trade', url: 'https://vinuchain.vinuswap.org/' }],
+      },
+      {
+        id: 'live2',
+        name: 'CoinFlip',
+        desc: 'Fair 50/50 on-chain game.',
+        icon: 'circle-dollar',
+        isLive: true,
+        links: [{ label: 'Play', url: 'https://coinflip.vinuhub.xyz' }],
+      },
+      {
+        id: 'live3',
+        name: 'Token Locker',
+        desc: 'Lock LP and tokens for trust.',
+        icon: 'lock',
+        isLive: true,
+        links: [{ label: 'Lock', url: 'https://locker.vinuhub.xyz' }],
+      },
+      {
+        id: 'live4',
+        name: 'Multi-Token Sender',
+        desc: 'Airdrop to thousands in one tx.',
+        icon: 'paper-plane',
+        isLive: true,
+        links: [{ label: 'Send', url: 'https://multitokenender.vinuhub.xyz' }],
+      },
+      {
+        id: 'live5',
+        name: 'Portfolio Tracker',
+        desc: 'Track all your assets in one place.',
+        icon: 'chart-line',
+        isLive: true,
+        links: [{ label: 'Track', url: 'https://portfoliotracker.vinuhub.xyz' }],
+      },
+      {
+        id: 'live6',
+        name: 'Stake $VIN',
+        desc: 'Stake native $VIN for rewards.',
+        icon: 'plant',
+        isLive: true,
+        links: [{ label: 'Stake', url: 'https://stakevin.vinuhub.xyz' }],
+      },
+      {
+        id: 'live7',
+        name: 'Staking Pools',
+        desc: 'Farm LP and earn $VINU.',
+        icon: 'swimming-pool',
+        isLive: true,
+        links: [{ label: 'Farm', url: 'https://stakingpools.vinuhub.xyz' }],
+      },
+      {
+        id: 'live8',
+        name: 'Token Creator',
+        desc: 'Create ERC-20 in 60 seconds.',
+        icon: 'sparkles',
+        isLive: true,
+        links: [{ label: 'Create', url: 'https://tokencreator.vinuhub.xyz' }],
+      },
+      {
+        id: 'live9',
+        name: 'VNS Naming',
+        desc: 'Register yourname.vc',
+        icon: 'tag',
+        isLive: true,
+        links: [{ label: 'Register', url: 'https://vns.vinuhub.xyz' }],
+      },
     ],
   };
 
-  const filteredProjects = projects[activeTab].filter(
-    (p) =>
-      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      p.desc.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProjects = projects[activeTab].filter((p) =>
+    p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    p.desc.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -92,21 +163,10 @@ export default function Home() {
           ))}
         </div>
       </div>
-      <footer className="bg-border py-10 text-center text-sm opacity-75 mt-20">
+      <footer className="bg-[var(--border)] py-10 text-center text-sm opacity-75 mt-20">
         <p>
-          © 2025{' '}
-          <a href="https://vinuhub.xyz" className="text-accent hover:underline">
-            VinuHub
-          </a>{' '}
-          — All tools live on VinuChain.
-          <br />
-          <a href="https://t.me/Vinuhub" className="text-accent hover:underline">
-            Join Community
-          </a>{' '}
-          •{' '}
-          <a href="https://t.me/lnF0xbtc" className="text-accent hover:underline">
-            Request Audit
-          </a>
+          © 2025 <a href="https://vinuhub.xyz" className="text-[var(--accent)] hover:underline">VinuHub</a> — All tools live on VinuChain.<br />
+          <a href="https://t.me/Vinuhub" className="text-[var(--accent)] hover:underline">Join Community</a> • <a href="https://t.me/lnF0xbtc" className="text-[var(--accent)] hover:underline">Request Audit</a>
         </p>
       </footer>
     </>
