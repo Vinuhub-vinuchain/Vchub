@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+.next/
+build/
+dist/
+out/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs and temp
+*.log
+*.tmp
+*.temp
+
+# Environment
+.env*
+!.env.example  
+
+# IDE/OS
+.vscode/
+Thumbs.db
+
+
