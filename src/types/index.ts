@@ -1,14 +1,16 @@
-export interface Link {
+export type TabKey = 'audited' | 'upcoming' | 'launched' | 'live';
+
+export interface ProjectLink {
   label: string;
   url: string;
+  onclick?: () => void;
 }
 
 export interface Project {
-  id: number;
+  id: string; 
   name: string;
   desc: string;
+  icon: string;
   isLive: boolean;
-  links: Link[];
+  links: ProjectLink[];
 }
-
-export type TabKey = 'audited' | 'upcoming' | 'launched' | 'live';

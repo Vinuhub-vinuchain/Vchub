@@ -14,7 +14,8 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<TabKey>('upcoming');
   const [searchTerm, setSearchTerm] = useState('');
 
-  const projects: Record<TabKey, Project[]> = {
+const projects = useMemo<Record<TabKey, Project[]>>(
+  () => ({
     audited: [
       {
         id: 'audited1',
@@ -157,15 +158,16 @@ export default function Home() {
         links: [{ label: 'Register', url: 'https://vns.vinuhub.xyz' }],
       },
     ],
-  };
+  }), []);
 
-  const filteredProjects = useMemo(() => {
-    return projects[activeTab].filter(
-      (p) =>
-        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        p.desc.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [activeTab, searchTerm]);
+const filteredProjects = useMemo(() => {
+  return projects[activeTab].filter(
+    (p) =>
+      p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      p.desc.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+}, [projects, activeTab, searchTerm]);
+
 
   return (
     <>
@@ -187,11 +189,7 @@ export default function Home() {
         )}
       </div>
 
-{/* <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-8">
-  {projects.upcoming.map((project) => (
-    <ProjectCard key={project.id} project={project} />
-  ))}
-</div> */}
+
 
       <footer className="bg-[var(--border)] py-10 text-center text-sm opacity-75 mt-20">
         <p>
