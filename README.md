@@ -6,4 +6,4 @@ A modern, responsive showcase for projects building on VinuChain. Features tabs 
 - **Tabbed Navigation**: Filter by project stage.
 - **Search & Filter**: Real-time project search.
 - **Responsive Design**: Mobile-first, dark theme.
-- **Smooth Animations**: CSS keyframes for card entry/hover.
+- **Smooth Animations**: CSS keyframes for card entry/hover.   
